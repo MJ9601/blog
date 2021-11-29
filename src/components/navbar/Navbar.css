@@ -1,0 +1,16 @@
+.icons-nav {
+}
+
+.navbar-container {
+  height: 3rem;
+}
+
+.img-avator {
+  width: 3rem;
+  height: 3rem;
+  object-fit: cover;
+  border-radius: 50%;
+}
+.icon-navbar-right {
+  cursor: pointer;
+}
