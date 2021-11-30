@@ -1,0 +1,57 @@
+header::before {
+  display: block;
+  content: "";
+  height: 65px;
+}
+.img-wrapper {
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+  position: relative;
+}
+.img-wrapper::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: #000;
+  opacity: 0.55;
+}
+.img-wrapper .avator-bg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.avator-wrapper {
+  position: absolute;
+  left: 2rem;
+  bottom: 1rem;
+  display: flex;
+  margin-left: 20px;
+}
+.avator-img {
+  border-radius: 10px;
+  width: 200px;
+  height: 200px;
+}
+.info {
+  margin-top: 60px;
+}
+.info .name-tag,
+.prefasion-tag {
+  margin-left: 30px;
+  color: #fff;
+  font-family: "Lora", serif;
+  font-style: italic;
+  text-shadow: 2px 2px rgba(0, 0, 0, 0.9);
+}
+.info .name-tag {
+  font-size: 50px;
+  margin-bottom: 20px;
+}
+.info .prefasion-tag {
+  font-style: italic;
+  font-size: 20px;
+}

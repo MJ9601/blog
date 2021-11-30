@@ -10,6 +10,8 @@
   height: 3rem;
   object-fit: cover;
   border-radius: 50%;
+  padding: 2px;
+  border: 1px solid red;
 }
 .icon-navbar-right {
   cursor: pointer;

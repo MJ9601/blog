@@ -1,0 +1,60 @@
+.img-post {
+  width: 500px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 7px;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.pic-info-wrapper {
+  padding: 0 10px;
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 5px;
+}
+.post-details {
+  position: relative;
+  height: inherit;
+}
+.post-title {
+  font-family: "Poppins";
+  width: 200px;
+  border-bottom: 2px solid #777;
+  margin-bottom: 20px;
+}
+.post-text {
+  font-size: 20px;
+  font-weight: 500;
+  width: 90%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.comment-section {
+  position: absolute;
+  width: 100%;
+  bottom: 20px;
+  right: 0;
+  padding-top: 10px;
+  padding-right: 50px;
+}
+.comment-section::before {
+  content: "";
+  width: 90%;
+  height: 2px;
+  top: 0;
+  left: 0;
+  position: absolute;
+  background: linear-gradient(to right, transparent, #666);
+}
+.comment-section-icon {
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  color: #555;
+}
+.comment-section-icon:hover {
+  color: red;
+}
