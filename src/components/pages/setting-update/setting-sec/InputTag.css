@@ -1,0 +1,19 @@
+label,
+input,
+h1,
+h2,
+div {
+  font-family: "Poppins";
+}
+.general-set-wrapper {
+  display: inline-block;
+  width: 45%;
+  margin: 5px 10px;
+}
+.general-set-wrapper input {
+  padding: 6px 7px;
+  border: none;
+}
+.general-set-wrapper input:focus {
+  outline: none;
+}

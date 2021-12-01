@@ -1,0 +1,53 @@
+section::before {
+  display: block;
+  height: 65px;
+  content: "";
+}
+section {
+  min-height: 100vh;
+}
+.posted-img {
+  width: 95%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+.publish-btn {
+  position: absolute;
+  top: 25px;
+  right: 50px;
+  font-family: "Poppins";
+}
+.imgtag {
+  cursor: pointer;
+  margin-right: 20px;
+  color: #777;
+  font-size: 50px;
+  transition: all 0.3s ease-in-out;
+}
+.imgtag:hover {
+  color: rgb(100, 235, 10);
+}
+.input-tag {
+  padding: 5px 20px;
+  margin-right: 20px;
+  border-radius: 5px;
+  border: none;
+  font-size: 20px;
+  font-family: "Poppins";
+  width: 70%;
+  margin-bottom: 20px;
+}
+.input-tag:focus {
+  outline: none;
+}
+.input-tag.loc {
+  width: 15%;
+}
+textarea.input-tag {
+  text-align: start;
+  margin-left: 45px;
+  width: 85.5%;
+  min-height: 200px;
+}

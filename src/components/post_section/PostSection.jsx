@@ -13,6 +13,12 @@ const PostSection = () => {
       <a href="#" className="text-decoration-none text-dark">
         <Post />
       </a>
+      <a href="#" className="text-decoration-none text-dark">
+        <Post />
+      </a>
+      <a href="#" className="text-decoration-none text-dark">
+        <Post />
+      </a>
     </div>
   );
 };

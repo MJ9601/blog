@@ -1,0 +1,17 @@
+.imgs-label {
+  font-size: 50px;
+  margin-right: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+.imgs-label:hover {
+  color: rgb(54, 243, 7);
+}
+.imgs {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 9px;
+  justify-self: center;
+  margin-left: 50px;
+}

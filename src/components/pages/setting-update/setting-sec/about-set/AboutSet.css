@@ -1,0 +1,44 @@
+label {
+  margin-bottom: 5px;
+}
+textarea {
+  padding: 8px 9px;
+  border: none;
+  height: 70px;
+  resize: none;
+}
+
+textarea:focus,
+input:focus {
+  outline: none;
+}
+span {
+  font-family: "Poppins";
+}
+.btn-add {
+  border: none;
+  margin-right: 10px;
+  background-color: transparent;
+  height: 30px;
+  width: 30px;
+  font-size: 20px;
+  transition: all 0.3s ease-in-out;
+  position: sticky;
+  top: 0;
+}
+.btn-add:active,
+.btn-add:focus {
+  border: none;
+  outline: none;
+}
+.btn-add:hover {
+  color: rgb(40, 245, 13);
+}
+.about-input-wrapper {
+  display: inline-block;
+  width: 45%;
+  height: 100%;
+}
+.about-input-wrapper:first-child {
+  margin-right: 25px;
+}

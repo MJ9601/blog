@@ -15,17 +15,8 @@ const Navbar = () => {
       <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top">
         <div className="container-fluid navbar-container px-5">
           <div>
-            <a href="#" className="navbar-brand">
-              <FaFacebook className=" icons-nav mx-1 p-0 fs-4" />
-            </a>
-            <a href="#" className="navbar-brand">
-              <FaPinterest className=" icons-nav mx-1 p-0 fs-4" />
-            </a>
-            <a href="#" className="navbar-brand">
-              <FaInstagram className=" icons-nav mx-1 p-0 fs-4" />
-            </a>
-            <a href="#" className="navbar-brand">
-              <FaTwitter className=" icons-nav mx-1 p-0 fs-4" />
+            <a href="#" className="navbar-brand fs-4 fw-bold brand">
+              Blog<span className="text-success">Away</span>
             </a>
           </div>
           <div>

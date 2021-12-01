@@ -1,0 +1,23 @@
+.comment-tag textarea {
+  width: 100%;
+  padding: 5px 10px 0px 10px;
+  background-color: #fff;
+  border: none;
+  border-radius: 7px;
+  height: 150px;
+  resize: none;
+}
+.comment-tag {
+  position: relative;
+  padding-bottom: 60px;
+}
+
+.comment-tag::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to right, #888, transparent);
+}

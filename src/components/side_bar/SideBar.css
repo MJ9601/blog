@@ -1,4 +1,6 @@
-.sideBar-section,
+.sideBar-section {
+  position: relative;
+}
 .about-me {
   display: flex;
   flex-direction: column;

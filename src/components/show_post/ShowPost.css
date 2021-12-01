@@ -1,0 +1,7 @@
+.header-section::before {
+  position: relative;
+  display: block;
+  height: 65px;
+  content: "";
+}
+

@@ -1,0 +1,19 @@
+.post-img {
+  height: 400px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.p-title {
+  font-family: "Poppins";
+}
+.p-text p {
+  font-family: "Lora";
+  position: relative;
+  padding-bottom: 15px;
+}
+.p-text p::first-letter {
+  font-size: 50px;
+  font-weight: bolder;
+  position: absolute;
+}
