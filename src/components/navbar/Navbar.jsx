@@ -8,6 +8,7 @@ import {
   FaSignOutAlt,
   FaTwitter,
 } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
@@ -16,41 +17,57 @@ const Navbar = () => {
         <div className="container-fluid navbar-container px-5">
           <div>
             <a href="#" className="navbar-brand fs-4 fw-bold brand">
-              Blog<span className="text-success">Away</span>
+              Blog<span className="brand">Away</span>
             </a>
           </div>
           <div>
             <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <a href="#home" className="nav-link text-uppercase">
+                <Link
+                  to="/:userName/profile"
+                  className="nav-link text-uppercase navbar-link-custome"
+                >
                   home
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
-                <a href="#about" className="nav-link text-uppercase">
+                <a
+                  href="#about"
+                  className="nav-link text-uppercase navbar-link-custome"
+                >
                   about
                 </a>
               </li>
               <li className="nav-item">
-                <a href="#contact" className="nav-link text-uppercase">
+                <a
+                  href="#contact"
+                  className="nav-link text-uppercase navbar-link-custome"
+                >
                   contact
                 </a>
               </li>
               <li className="nav-item">
-                <a href="#write" className="nav-link text-uppercase">
+                <Link
+                  to="/:userName/createPost"
+                  className="nav-link text-uppercase navbar-link-custome"
+                >
                   write
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
           <div className="d-flex align-items-center justfy-content-between">
-            <img
-              src="https://userstock.io/data/wp-content/uploads/2017/09/michael-dam-258165-300x300.jpg"
-              alt=""
-              className="img-fluid img-avator me-2"
-            />
+            <Link to="/:userName/profile">
+              <img
+                src="https://userstock.io/data/wp-content/uploads/2017/09/michael-dam-258165-300x300.jpg"
+                alt=""
+                className="img-fluid img-avator me-2"
+              />{" "}
+            </Link>
             <FaSearch className="fs-4 me-2 icon-navbar-right" />
-            <FaSignOutAlt className="fs-4 me-2 icon-navbar-right" />
+            <Link to="/">
+              <FaSignOutAlt className="fs-4 me-2 icon-navbar-right" />{" "}
+            </Link>
             <FaBars className="fs-4 d-md-none icon-navbar-right" />
           </div>
         </div>

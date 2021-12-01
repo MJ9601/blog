@@ -1,11 +1,12 @@
+import { useState } from "react";
 import { FaReply, FaThumbsDown, FaThumbsUp } from "react-icons/fa";
 import "./Comments.css";
 
-const Comments = () => {
+const Comments = ({ setReplay }) => {
   return (
     <div className="opinion-tag container pt-5">
       <h1 className="fs-4">Comments:</h1>
-      <div className=" ms-5 mb-5 mt-1 d-flex align-items-start">
+      <div className=" ms-5 mb-3 mt-1 d-flex align-items-start">
         <img
           src="https://userstock.io/data/wp-content/uploads/2020/06/women-s-white-and-black-button-up-collared-shirt-774909-2-1024x1024.jpg"
           alt=""
@@ -21,8 +22,11 @@ const Comments = () => {
             incidunt sint soluta laboriosam atque. Cupiditate.
           </p>
           <div className="d-flex justify-content-end">
-            <a href="#">
-              <FaReply className="fs-5 text-secondary me-3 icon-comment mb-2" />
+            <a>
+              <FaReply
+                className="fs-5 text-secondary me-3 icon-comment mb-2"
+                onClick={() => setReplay(true)}
+              />
             </a>
             <a href="#">
               <FaThumbsUp className="fs-5 text-secondary me-3 icon-comment mb-2" />

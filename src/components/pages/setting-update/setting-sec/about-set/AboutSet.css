@@ -34,10 +34,21 @@ span {
 .btn-add:hover {
   color: rgb(40, 245, 13);
 }
-.about-input-wrapper {
+.about-input-wrapper:first-child {
   display: inline-block;
   width: 45%;
-  height: 100%;
+}
+.about-input-wrapper:nth-child(2),
+.about-input-wrapper:nth-child(3) {
+  display: inline-block;
+  width: 20%;
+}
+.about-input-wrapper:nth-child(2) {
+  margin-right: 25px;
+}
+.about-input-wrapper:nth-child(2) input {
+  border: none;
+  padding: 3px 10px;
 }
 .about-input-wrapper:first-child {
   margin-right: 25px;

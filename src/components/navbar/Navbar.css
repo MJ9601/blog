@@ -5,7 +5,16 @@
 .navbar-container {
   height: 3rem;
 }
-
+.brand {
+  color: rgb(0, 212, 35);
+}
+.navbar-link-custome {
+  transition: all 0.3s ease-in-out;
+}
+.navbar-link-custome:hover {
+  color: rgb(0, 212, 35) !important;
+  font-weight: bold;
+}
 .img-avator {
   width: 3rem;
   height: 3rem;
@@ -13,7 +22,17 @@
   border-radius: 50%;
   padding: 2px;
   border: 1px solid red;
+  cursor: pointer;
+  transition: all 0.4s ease-in-out;
+}
+.img-avator:hover {
+  border: 1px solid rgb(0, 212, 35);
 }
 .icon-navbar-right {
   cursor: pointer;
+  color: #555;
+  transition: all 0.3s ease-in-out;
+}
+.icon-navbar-right:hover {
+  color: rgb(0, 212, 35);
 }

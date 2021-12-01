@@ -6,8 +6,14 @@ export default function GeneralSet() {
     <>
       <h1 className="fs-4 text-secondary pb-3">General Setting:</h1>
       <InputTag
+        id={"name"}
+        label={"Full name"}
+        type={"text"}
+        placeholder={"name .."}
+      />
+      <InputTag
         id={"userName"}
-        label={"username"}
+        label={"Username"}
         type={"text"}
         placeholder={"username .."}
       />

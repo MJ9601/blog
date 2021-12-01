@@ -1,0 +1,72 @@
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 0;
+}
+.background::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  content: "";
+  background-color: #000;
+  opacity: 0.2;
+}
+.background img {
+  width: 100%;
+  height: inherit;
+  object-fit: cover;
+}
+.banner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #000;
+  padding: 2px;
+  z-index: 1;
+  width: 100%;
+  height: calc(100vh - 65px);
+}
+.banner h1,
+h2 {
+  z-index: 3;
+}
+.banner h1 {
+  font-size: 30px;
+  color: aliceblue;
+  text-shadow: 1px 2px rgba(0, 0, 0, 0.3);
+}
+.banner h2 {
+  font-style: 40px;
+  color: aliceblue;
+  text-shadow: 2px 2px rgba(0, 0, 0, 0.4);
+}
+.banner-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 20px;
+  font-weight: 600;
+  border: none;
+  border-radius: 2px;
+  transition: all 0.3s ease-in-out;
+  z-index: 3;
+  text-decoration: none;
+  font-family: "Poppins";
+  background-color: azure;
+}
+.banner-btn:hover {
+  background: radial-gradient(
+    circle,
+    rgba(1, 0, 14, 1) 3%,
+    rgba(61, 61, 119, 1) 17%,
+    rgba(53, 64, 93, 1) 32%,
+    rgba(41, 56, 59, 1) 47%,
+    rgba(31, 39, 41, 1) 56%
+  );
+  color: aliceblue;
+}
