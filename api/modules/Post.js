@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 const ObjectId = mongoose.Schema.ObjectId;
 
 const PostSchema = new mongoose.Schema(
@@ -16,11 +16,9 @@ const PostSchema = new mongoose.Schema(
       type: String,
       required: false,
     },
-    username: [{ type: ObjectId, ref: "User" }],
+    username: [{ type: ObjectId, ref: "User", unique: true }],
     review: [{ type: ObjectId, ref: "Review" }],
-    categories: {
-      type: Array,
-    },
+    categories: [{ type: ObjectId, ref: "Category" }],
   },
   { timestamps: true }
 );

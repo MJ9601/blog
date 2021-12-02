@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 const ObjectId = mongoose.Schema.ObjectId;
 
 const UserInfoSchema = new mongoose.Schema(
@@ -17,7 +17,7 @@ const UserInfoSchema = new mongoose.Schema(
     },
     passions: {
       type: Array,
-      default: "",
+      default: [],
     },
     socialMedias: [{ type: ObjectId, ref: "SocialMedia" }],
   },

@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const SocialMediaSchema = new mongoose.Schema(
   {
@@ -22,4 +22,4 @@ const SocialMediaSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("SoicalMedia", SocialMediaSchema);
+module.exports = mongoose.model("SocialMedia", SocialMediaSchema);

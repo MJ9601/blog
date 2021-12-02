@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const ObjectId = mongoose.Schema.ObjectId;
 
 const DislikeSchema = new mongoose.Schema(
@@ -7,9 +8,9 @@ const DislikeSchema = new mongoose.Schema(
       required: false,
       default: false,
     },
-    username: [{ type: ObjectId, ref: "User" }],
+    username: [{ type: ObjectId, ref: "User", unique: true }],
   },
   { timestamps: true }
 );
 
-export default mongoose.model("Dislike", DislikeSchema);
+module.exports = mongoose.model("Dislike", DislikeSchema);
