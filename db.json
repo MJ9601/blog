@@ -1,0 +1,24 @@
+{
+  "user": {
+    "username": "userName",
+    "email": "Email",
+    "password": "Password",
+    "images": {
+      "avatarImg": "avatarImgUrl",
+      "homeImg": "homeImgUrl",
+      "backgroundImg": "backgroundImgUrl"
+    },
+    "personalInfo": {
+      "fullname": "fullName",
+      "aboutUser": "aboutMe",
+      "career": "job",
+      "passions": ["music", "movies", "Fashion", "Tech"],
+      "socialMedia": {
+        "facebook": "facebookUrl",
+        "instagram": "instagramUrl",
+        "tiwtter": "tiwtterUrl",
+        "pinterest": "pinterestUrl"
+      }
+    }
+  }
+}
