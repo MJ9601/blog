@@ -2,8 +2,9 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
-const authRoute = require("./routes/auth.js");
 const express = require("express");
+const authRoute = require("./routes/auth.js");
+const usersRoute = require("./routes/users.js");
 
 const corsOptions = {
   origin: "*",
@@ -32,5 +33,6 @@ let db = mongoose.connect("mongodb://localhost/blog");
 //   .catch((err) => console.log(err));
 
 app.use("/api/auth", authRoute);
+app.use("/api/users", usersRoute);
 
 app.listen(3001, () => console.log("server is running on PORT 3001"));

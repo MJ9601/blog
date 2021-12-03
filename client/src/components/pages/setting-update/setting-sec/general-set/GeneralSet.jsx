@@ -1,7 +1,7 @@
 import "./GeneralSet.css";
 import InputTag from "../InputTag";
 
-export default function GeneralSet() {
+export default function GeneralSet({ User }) {
   return (
     <>
       <h1 className="fs-4 text-secondary pb-3">General Setting:</h1>
@@ -29,6 +29,14 @@ export default function GeneralSet() {
         type={"password"}
         placeholder={""}
       />
+      {User && (
+        <InputTag
+          id={"newpassword"}
+          label={"New Password"}
+          type={"password"}
+          placeholder={""}
+        />
+      )}
       <InputTag
         id={"repeatPass"}
         label={"Repeat Password"}

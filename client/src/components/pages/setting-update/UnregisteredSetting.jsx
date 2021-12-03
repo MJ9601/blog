@@ -4,7 +4,7 @@ import GeneralSet from "./setting-sec/general-set/GeneralSet";
 import PicSet from "./setting-sec/pic-set/PicSet";
 import SetUpBase from "./setting-sec/set_up/SetUpBase";
 
-export default function UnregisteredSetting() {
+export default function UnregisteredSetting({ User }) {
   return (
     <section className="w-100 px-5  bg-light pt-5">
       <div className="container">
@@ -12,7 +12,7 @@ export default function UnregisteredSetting() {
           <h1 className="fs-3 text-success">Create Your Profile</h1>
         </div>
         <form className="py-5 px-3">
-          <GeneralSet />
+          <GeneralSet User={User} />
           <PicSet />
           <AboutSet />
           <button className="my-3 ms-2 btn bg-success text-white fs-5 px-5">

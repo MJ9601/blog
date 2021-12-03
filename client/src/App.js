@@ -11,7 +11,7 @@ import SettingSec from "./components/pages/setting-update/setting-sec/SettingSec
 import { useState } from "react";
 
 function App() {
-  const [User, setUser] = useState(true);
+  const [User, setUser] = useState(false);
   return (
     <Router>
       <Routes>
@@ -45,7 +45,8 @@ function App() {
           element={
             !User && (
               <>
-                <Navbar setUser={setUser} User={User} /> <UnregisteredSetting />
+                <Navbar setUser={setUser} User={User} />{" "}
+                <UnregisteredSetting User={User} />
               </>
             )
           }
@@ -69,7 +70,8 @@ function App() {
           element={
             User && (
               <>
-                <Navbar setUser={setUser} User={User} /> <SettingSec />
+                <Navbar setUser={setUser} User={User} />{" "}
+                <SettingSec User={User} />
               </>
             )
           }

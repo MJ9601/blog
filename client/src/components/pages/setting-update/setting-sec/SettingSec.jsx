@@ -5,7 +5,7 @@ import PicSet from "./pic-set/PicSet";
 import "./SettingSec.css";
 import SetUpBase from "./set_up/SetUpBase";
 
-export default function SettingSec() {
+export default function SettingSec({ User }) {
   return (
     <>
       <section className="d-flex">
@@ -13,7 +13,7 @@ export default function SettingSec() {
           <section className="w-100 px-5 bg-light pt-5">
             <SetUpBase />
             <form className="py-5 px-3">
-              <GeneralSet />
+              <GeneralSet User={User} />
               <PicSet />
               <AboutSet />
               <button className="my-3 ms-2 btn bg-success text-white fs-5 px-5">
