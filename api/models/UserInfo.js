@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
-const ObjectId = mongoose.Schema.ObjectId;
+const Schema = mongoose.Schema;
+const ObjectId = Schema.Types.ObjectId;
 
-const UserInfoSchema = new mongoose.Schema(
+const UserInfoSchema = Schema(
   {
     fullname: {
       type: String,
@@ -19,7 +20,7 @@ const UserInfoSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
-    socialMedias: [{ type: ObjectId, ref: "SocialMedia" }],
+    socialMedias: { type: ObjectId, ref: "SocialMedia" },
   },
   { timestamps: true }
 );

@@ -1,9 +1,9 @@
 const router = require("express").Router();
-const UserImg = require("../modules/UserImg");
-const SocialMedia = require("../modules/SocialMedia");
+const UserImg = require("../models/UserImg");
+const SocialMedia = require("../models/SocialMedia");
 const bcrypt = require("bcrypt");
-const UserInfo = require("../modules/UserInfo");
-const User = require("../modules/User");
+const UserInfo = require("../models/UserInfo");
+const User = require("../models/User");
 
 
 // registeration

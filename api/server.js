@@ -5,6 +5,7 @@ const dotenv = require("dotenv");
 const express = require("express");
 const authRoute = require("./routes/auth.js");
 const usersRoute = require("./routes/users.js");
+const postsRoute = require("./routes/posts.js");
 
 const corsOptions = {
   origin: "*",
@@ -34,5 +35,6 @@ let db = mongoose.connect("mongodb://localhost/blog");
 
 app.use("/api/auth", authRoute);
 app.use("/api/users", usersRoute);
+app.use("/api/posts", postsRoute);
 
 app.listen(3001, () => console.log("server is running on PORT 3001"));

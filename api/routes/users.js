@@ -1,14 +1,33 @@
 const router = require("express").Router();
-const UserImg = require("../modules/UserImg");
-const SocialMedia = require("../modules/SocialMedia");
+const UserImg = require("../models/UserImg");
+const SocialMedia = require("../models/SocialMedia");
 const bcrypt = require("bcrypt");
-const UserInfo = require("../modules/UserInfo");
-const User = require("../modules/User");
+const UserInfo = require("../models/UserInfo");
+const User = require("../models/User");
+const Post = require("../models/Post");
+const Like = require("../models/Like");
+const Dislike = require("../models/Dislike");
+const Comment = require("../models/Comment");
 
 router.get("/:id", async (req, res) => {
-  const user = await User.findById(req.params.id);
-  const { password, ...others } = user._doc;
-  res.status(200).send(others);
+  try {
+    await User.findById(req.params.id)
+      .populate({ path: "userImgs", model: "UserImg" })
+      .populate({
+        path: "userInfos",
+        model: "UserInfo",
+        populate: { path: "socialMedias", model: "SocialMedia" },
+      })
+      .exec((err, resp) => {
+        if (err) res.status(500).send(err);
+        else {
+          const { password, ...others } = resp._doc;
+          res.status(200).send(others);
+        }
+      });
+  } catch (error) {
+    res.status(500).send(error);
+  }
 });
 
 // update profile
@@ -32,10 +51,10 @@ router.put("/:id", async (req, res) => {
     const hashedPass = await bcrypt.hash(req.body.newpassword, salt);
 
     const userId = user._id;
-    const userImgsId = user.userImgs[0];
-    const userInfosId = user.userInfos[0];
+    const userImgsId = user.userImgs;
+    const userInfosId = user.userInfos;
     const userInfo = await UserInfo.findById(userInfosId);
-    const userSocialMediaId = userInfo.socialMedias[0];
+    const userSocialMediaId = userInfo.socialMedias;
 
     const updateUserImgs = {
       avatarImg: req.body.avatarImg,
@@ -122,43 +141,55 @@ router.put("/:id", async (req, res) => {
 
 // remove profile
 router.delete("/:id", async (req, res) => {
+  (!req.body || req.body === "") &&
+    res.status(500).json({ err: "update body" });
   try {
-    (!req.body || req.body === "") &&
-      res.status(500).json({ err: "update body" });
-
     const user = await User.findById(req.params.id);
-    !(user._id == req.body.id) &&
-      res.status(401).send({ error: "You can't edit this account" });
 
-    console.log(user);
-    const passValidation = await bcrypt.compare(
-      req.body.password,
-      user.password
-    );
-    !passValidation && res.status(401).send({ error: "Password is Wrong!" });
-    console.log("000000000");
+    try {
+      const passValidation = await bcrypt.compare(
+        req.body.password,
+        user.password
+      );
+      !passValidation && res.status(401).send({ error: "Password is Wrong!" });
 
-    const userId = user._id;
-    const userImgsId = user.userImgs[0];
-    const userInfosId = user.userInfos[0];
-    const userInfo = await UserInfo.findById(userInfosId);
-    const userSocialMediaId = userInfo.socialMedias[0];
+      const userId = user._id;
+      const userImgsId = user.userImgs;
+      const userInfosId = user.userInfos;
+      const userInfo = await UserInfo.findById(userInfosId);
+      const userSocialMediaId = userInfo.socialMedias;
 
-    await UserInfo.findByIdAndDelete(userInfosId, async (err) => {
-      if (err) res.status(502).send(err);
-      else {
-        await SocialMedia.findByIdAndDelete(userSocialMediaId, async (err) => {
-          if (err) res.status(502).send(err);
-          else {
-            await UserImg.findByIdAndDelete(userImgsId, async (err) => {
-              if (err) res.status(500).send(err);
+      // delete all posts, likes, comments and dislikes of user:
+
+      await Post.deleteMany({ username: userId });
+      await Like.deleteMany({ username: userId });
+      await Dislike.deleteMany({ username: userId });
+      await Comment.deleteMany({ username: userId });
+
+      // deleting user info including photos, personal info, and ...
+      await UserInfo.findByIdAndDelete(userInfosId, async (err) => {
+        if (err) res.status(502).send(err);
+        else {
+          await SocialMedia.findByIdAndDelete(
+            userSocialMediaId,
+            async (err) => {
+              if (err) res.status(502).send(err);
               else {
-                await User.findByIdAndDelete(userId, async (err) => {
+                await UserImg.findByIdAndDelete(userImgsId, async (err) => {
                   if (err) res.status(500).send(err);
                   else {
-                    res.status(200).send({
-                      success: "profile successfully deleted",
-                    });
+                    await User.findByIdAndDelete(userId, async (err) => {
+                      if (err) res.status(500).send(err);
+                      else {
+                        res.status(200).send({
+                          success: "profile successfully deleted",
+                        });
+                      }
+                    })
+                      .clone()
+                      .catch(function (err) {
+                        res.status(500).send(err);
+                      });
                   }
                 })
                   .clone()
@@ -166,25 +197,23 @@ router.delete("/:id", async (req, res) => {
                     res.status(500).send(err);
                   });
               }
-            })
-              .clone()
-              .catch(function (err) {
-                res.status(500).send(err);
-              });
-          }
-        })
-          .clone()
-          .catch(function (err) {
-            res.status(500).send(err);
-          });
-      }
-    })
-      .clone()
-      .catch(function (err) {
-        res.status(500).send(err);
-      });
+            }
+          )
+            .clone()
+            .catch(function (err) {
+              res.status(500).send(err);
+            });
+        }
+      })
+        .clone()
+        .catch(function (err) {
+          res.status(500).send(err);
+        });
+    } catch (error) {
+      res.status(500).json(error);
+    }
   } catch (error) {
-    res.status(500).json(error);
+    res.status(404).json("User not found!");
   }
 });
 
