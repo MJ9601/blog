@@ -4,6 +4,7 @@ const Post = require("../models/Post");
 const Like = require("../models/Like");
 const Dislike = require("../models/Dislike");
 const Comment = require("../models/Comment");
+const Category = require("../models/Category");
 
 // get posts for main page or user page or getting base on categories or searching for categories
 router.post("/", async (req, res) => {
@@ -19,11 +20,15 @@ router.post("/", async (req, res) => {
 
     // get user posts
     if (usernameId) {
-      posts = await Post.find(
+      await Post.find(
         { username: usernameId },
         (err) => err && res.status(500).send(err)
       )
-        .populate({ path: "username", model: "User" ,populate:{path:'useImgs'} })
+        .populate({
+          path: "username",
+          model: "User",
+          populate: { path: "useImgs", model: "UserImg" },
+        })
         .exec((err, resp) => {
           if (err) res.status(500).send(err);
           else {
@@ -33,35 +38,71 @@ router.post("/", async (req, res) => {
         });
     } else if (usernameId && catId) {
       // getting user posts from a category
-      posts = await Post.find(
+      await Post.find(
         {
           username: usernameId,
           categories: {
             $in: [catId],
           },
         },
-        (err) => (err ? res.status(500).send(err) : res.status(200).send(posts))
-      );
+        (err) => err && res.status(500).send(err)
+      )
+        .populate({
+          path: "username",
+          model: "User",
+          populate: { path: "useImgs", model: "UserImg" },
+        })
+        .exec((err, resp) => {
+          if (err) res.status(500).send(err);
+          else {
+            const { password, ...others } = resp._doc;
+            res.status(200).send(others);
+          }
+        });
     } else if (catId) {
       // getting posts from a category using category search
-      posts = await Post.find(
+      await Post.find(
         {
           categories: {
             $in: [catId],
           },
         },
-        (err) => (err ? res.status(500).send(err) : res.status(200).send(posts))
-      );
+        (err) => err && res.status(500).send(err)
+      )
+        .populate({
+          path: "username",
+          model: "User",
+          populate: { path: "useImgs", model: "UserImg" },
+        })
+        .exec((err, resp) => {
+          if (err) res.status(500).send(err);
+          else {
+            const { password, ...others } = resp._doc;
+            res.status(200).send(others);
+          }
+        });
     } else {
       // getting posts base on time piriod
       const start = req.body.startDate;
       const end = req.body.endDate;
-      posts = await Post.find(
+      await Post.find(
         {
           created_on: { $gte: new Date(start), $lt: new Date(end) },
         },
-        (err) => (err ? res.status(500).send(err) : res.status(200).send(posts))
-      );
+        (err) => err && res.status(500).send(err)
+      )
+        .populate({
+          path: "username",
+          model: "User",
+          populate: { path: "useImgs", model: "UserImg" },
+        })
+        .exec((err, resp) => {
+          if (err) res.status(500).send(err);
+          else {
+            const { password, ...others } = resp._doc;
+            res.status(200).send(others);
+          }
+        });
     }
   } catch (error) {
     res.status(500).send({ error: error });
@@ -72,9 +113,24 @@ router.post("/", async (req, res) => {
 
 router.get("/:postId", async (req, res) => {
   try {
-    const targetPost = await Post.findById(req.params.postId, (err) =>
-      err ? res.status(500).send(err) : res.status(200).send(targetPost)
-    );
+    await Post.findById(
+      req.params.postId,
+      (err) => err && res.status(500).send(err)
+    )
+      .populate({ path: "comments", model: "Comment" })
+      .populate({ path: "categories", model: "Category" })
+      .populate({
+        path: "username",
+        model: "User",
+        populate: { path: "useImgs", model: "UserImg" },
+      })
+      .exec((err, resp) => {
+        if (err) res.status(500).send(err);
+        else {
+          const { password, ...others } = resp._doc;
+          res.status(200).send(others);
+        }
+      });
   } catch (error) {
     res.status(500).send(error);
   }
@@ -90,10 +146,39 @@ router.post("/createPost", async (req, res) => {
       photo: req.body.photo,
       username: [req.body.userId],
     });
+    const unUsedCategories = [];
+    const categoryIds = [];
 
-    await post.save((err, resp) =>
-      err ? res.status(500).send(err) : res.status(200).send(resp)
+    // checking for existing categories
+    req.body.categories.forEach(async (cat) => {
+      await Category.find({ name: cat }, (err, resp) =>
+        err ? unUsedCategories.push(cat) : categoryIds.push(cat._id)
+      );
+    });
+
+    // create new categoreis
+    const newCategories = unUsedCategories.map(
+      async (cat) => new Category({ $set: cat })
     );
+
+    // save post and categories and refer categories to post
+    await post.save(async (err, firstResp) => {
+      if (err) res.status(500).send(err);
+      else {
+        await Category.insertMany(newCategories, async (err, secondResp) => {
+          if (err) res.status(500).send(err);
+          else {
+            categoryIds = [...categoryIds, ...secondResp._id];
+            await Post.findByIdAndUpdate(
+              firstResp._id,
+              { categories: categoryIds },
+              (err, lastResp) =>
+                err ? res.status(500).send(err) : res.status(200).send(lastResp)
+            );
+          }
+        });
+      }
+    });
   } catch (error) {
     res.status(500).send(error);
   }
@@ -103,6 +188,18 @@ router.post("/createPost", async (req, res) => {
 
 router.put("/:postId", async (req, res) => {
   try {
+    const updatedCategoriesIds = req.body.categories.map(async (cat) => {
+      await Category.find({ name: cat }, async (err, firstResp) => {
+        if (firstResp) firstResp._id;
+        else {
+          const newCat = new Category(cat);
+          await newCat.save((err, secondResp) =>
+            err ? res.status(500).json(err) : secondResp._id
+          );
+        }
+      });
+    });
+
     const updatedPost = {
       title: req.body.title,
       desc: req.body.desc,
@@ -112,8 +209,20 @@ router.put("/:postId", async (req, res) => {
       req.params.postId,
       { $set: updatedPost },
       { new: true },
-      (err, resp) =>
-        err ? res.status(500).json(err) : res.status(200).json(resp)
+      async (err, firstResp) => {
+        if (err) res.status(500).json(err);
+        else {
+          await Post.findByIdAndUpdate(
+            firstResp._id,
+            {
+              categories: { $set: updatedCategoriesIds },
+            },
+            { new: true },
+            (err, secondResp) =>
+              err ? res.status(500).send(err) : res.status(500).send(secondResp)
+          );
+        }
+      }
     );
   } catch (error) {
     res.status(500).json(error);
