@@ -17,7 +17,7 @@ const PostSchema = Schema(
       type: String,
       required: false,
     },
-    username: { type: Schema.Types.ObjectId, ref: "User", unique: true },
+    username: { type: Schema.Types.ObjectId, ref: "User" },
     likes: [{ type: Schema.Types.ObjectId, ref: "Like" }],
     dislikes: [{ type: Schema.Types.ObjectId, ref: "Dislike" }],
     comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
