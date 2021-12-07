@@ -17,6 +17,11 @@ const UserSchema = new Schema(
       type: String,
       required: true,
     },
+    isPrivate: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
     userImgs: { type: mongoose.Schema.Types.ObjectId, ref: "UserImg" },
     userInfos: { type: mongoose.Schema.Types.ObjectId, ref: "UserInfo" },
     likedPosts: [{ type: Schema.Types.ObjectId, ref: "Post" }],
@@ -26,7 +31,9 @@ const UserSchema = new Schema(
     followings: [{ type: Schema.Types.ObjectId, ref: "User" }],
     blockedUsers: [{ type: Schema.Types.ObjectId, ref: "User" }],
     savedPosts: [{ type: Schema.Types.ObjectId, ref: "Post" }],
-    messages: [{ type: Schema.Types.ObjectId, ref: "Message" }],
+    recievedMessages: [{ type: Schema.Types.ObjectId, ref: "Message" }],
+    sentMessages: [{ type: Schema.Types.ObjectId, ref: "Message" }],
+    requests: [{ type: Schema.Types.ObjectId, ref: "User" }],
   },
   { timestamps: true }
 );

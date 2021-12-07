@@ -8,7 +8,8 @@ const usersRoute = require("./routes/users.js");
 const postsRoute = require("./routes/posts.js");
 const getPostAndSearchRoute = require("./routes/getPostAndSearch.js");
 const commentsRoute = require("./routes/comments.js");
-const likesAnddislikesRoute = require("./routes/likesAnddislikes.js");
+const likeDislikeSaveRoute = require("./routes/likeDislikeSave.js");
+const followerAndFollowingRoute = require("./routes/followerAndFollowing.js");
 
 const corsOptions = {
   origin: "*",
@@ -41,6 +42,7 @@ app.use("/api/users", usersRoute);
 app.use("/api/posts", postsRoute);
 app.use("/api/search", getPostAndSearchRoute);
 app.use("/api/comments", commentsRoute);
-app.use("/api/likesAnddislikes", likesAnddislikesRoute);
+app.use("/api/likeDislikeSave", likeDislikeSaveRoute);
+app.use("/api/followerAndFollowing", followerAndFollowingRoute);
 
 app.listen(3001, () => console.log("server is running on PORT 3001"));

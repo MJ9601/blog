@@ -89,8 +89,6 @@ router.put("/:id", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
   try {
-    await Like.deleteMany({ originalComment: req.params.id });
-    await Dislike.deleteMany({ originalComment: req.params.id });
     await Comment.deleteMany({ originalComment: req.params.id });
 
     await Comment.findById(req.params.id, async (err, firstResp) => {

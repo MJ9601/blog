@@ -12,6 +12,7 @@ const MessageSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "Message",
   },
+  like: { type: Schema.Types.ObjectId, ref: "User" },
 });
 
 module.exports = mongoose.model("Message", MessageSchema);
