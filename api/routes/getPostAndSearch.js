@@ -1,9 +1,6 @@
 const router = require("express").Router();
 const User = require("../models/User");
 const Post = require("../models/Post");
-const Like = require("../models/Like");
-const Dislike = require("../models/Dislike");
-const Comment = require("../models/Comment");
 const Category = require("../models/Category");
 
 // get post with user username
@@ -93,7 +90,7 @@ router.post("/", async (req, res) => {
             )
       );
   else {
-    console.log(new Date(req.body.start));
+    // need review
     await Post.find({
       created_on: {
         $gte: new Date(req.body.start),

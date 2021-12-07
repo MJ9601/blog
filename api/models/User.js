@@ -26,6 +26,7 @@ const UserSchema = new Schema(
     followings: [{ type: Schema.Types.ObjectId, ref: "User" }],
     blockedUsers: [{ type: Schema.Types.ObjectId, ref: "User" }],
     savedPosts: [{ type: Schema.Types.ObjectId, ref: "Post" }],
+    messages: [{ type: Schema.Types.ObjectId, ref: "Message" }],
   },
   { timestamps: true }
 );

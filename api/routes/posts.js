@@ -1,15 +1,47 @@
 const router = require("express").Router();
 const User = require("../models/User");
 const Post = require("../models/Post");
-const Like = require("../models/Like");
-const Dislike = require("../models/Dislike");
 const Comment = require("../models/Comment");
 const Category = require("../models/Category");
 
 // get posts for main page or user page or getting base on categories or searching for categories
 
-
 // create post
+// get a post
+router.get("/:postId", async (req, res) => {
+  try {
+    await Post.findById(req.params.postId)
+      .populate({
+        path: "username",
+        model: "User",
+        populate: { path: "userImgs", model: "UserImg" },
+      })
+      .populate({
+        path: "comments",
+        model: "Comment",
+        populate: { path: "replaies", model: "Comment" },
+      })
+      .populate({
+        path: "likes",
+        model: "Like",
+        populate: { path: "username", model: "User" },
+      })
+      .populate({
+        path: "dislikes",
+        model: "Dislike",
+        populate: { path: "username", model: "User" },
+      })
+      .populate({
+        path: "categories",
+        model: "Category",
+      })
+      .exec((err, resp) =>
+        err ? res.status(500).send(err) : res.status(200).send(resp)
+      );
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 
 router.post("/createPost", async (req, res) => {
   try {
@@ -166,8 +198,6 @@ router.put("/:postId", async (req, res) => {
 
 router.delete("/:postId", async (req, res) => {
   try {
-    await Like.deleteMany({ originalPost: req.body.postId });
-    await Dislike.deleteMany({ originalPost: req.body.postId });
     await Comment.deleteMany({ originalPost: req.body.postId });
     console.log("00");
     await User.findOne(

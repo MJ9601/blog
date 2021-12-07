@@ -5,8 +5,6 @@ const bcrypt = require("bcrypt");
 const UserInfo = require("../models/UserInfo");
 const User = require("../models/User");
 const Post = require("../models/Post");
-const Like = require("../models/Like");
-const Dislike = require("../models/Dislike");
 const Comment = require("../models/Comment");
 
 router.get("/:id", async (req, res) => {
@@ -162,8 +160,6 @@ router.delete("/:id", async (req, res) => {
       // delete all posts, likes, comments and dislikes of user:
 
       await Post.deleteMany({ username: userId });
-      await Like.deleteMany({ username: userId });
-      await Dislike.deleteMany({ username: userId });
       await Comment.deleteMany({ username: userId });
 
       // deleting user info including photos, personal info, and ...

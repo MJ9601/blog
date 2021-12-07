@@ -7,11 +7,22 @@ const CommentSchema = new Schema(
       type: String,
       required: true,
     },
+    isReplay: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
     originalPost: { type: Schema.Types.ObjectId, ref: "Post" },
-    username: { type: Schema.Types.ObjectId, ref: "User" },
-    likes: [{ type: Schema.Types.ObjectId, ref: "Like" }],
-    dislikes: [{ type: Schema.Types.ObjectId, ref: "Dislike" }],
-    comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
+    originalComment: { type: Schema.Types.ObjectId, ref: "Comment" },
+    username: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+      unique: false,
+    },
+    likes: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    dislikes: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    replaies: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
   },
   { timestamps: true }
 );
