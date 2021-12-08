@@ -5,7 +5,7 @@ const Comment = require("../models/Comment");
 
 // create like, dislile
 // like
-router.post("/like", async (req, res) => {
+router.put("/like", async (req, res) => {
   try {
     await Post.findByIdAndUpdate(
       req.body.originalPostId,
@@ -46,7 +46,7 @@ router.post("/like", async (req, res) => {
 });
 
 // dislike
-router.post("/dislike", async (req, res) => {
+router.put("/dislike", async (req, res) => {
   try {
     await Post.findByIdAndUpdate(
       req.body.originalPostId,
@@ -177,7 +177,7 @@ router.delete("/dislike", async (req, res) => {
 
 // save and desave post
 
-router.post("/savePost", async (req, res) => {
+router.put("/savePost", async (req, res) => {
   try {
     await User.findByIdAndUpdate(
       req.body.usernameId,
@@ -195,7 +195,7 @@ router.post("/savePost", async (req, res) => {
 
 // desaveing a post
 
-router.post("/desavePost", async (req, res) => {
+router.put("/desavePost", async (req, res) => {
   try {
     await User.findById(req.body.usernameId, async (err, firstResp) =>
       err

@@ -59,7 +59,7 @@ router.post("/", async (req, res) => {
           err
             ? res.status(500).send(err)
             : res.status(200).send(
-                secondResp.map((element) => ({
+                secondResp.filter(post => !post.username.isPrivate).map((element) => ({
                   postIds: element._id,
                   title: element.title,
                   desc: element.desc,
@@ -80,7 +80,7 @@ router.post("/", async (req, res) => {
         err
           ? res.status(500).send(err)
           : res.status(200).send(
-              secondResp.map((element) => ({
+              secondResp.filter(post => !post.username.isPrivate).map((element) => ({
                 postIds: element._id,
                 title: element.title,
                 desc: element.desc,

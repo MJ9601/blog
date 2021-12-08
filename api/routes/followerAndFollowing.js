@@ -4,7 +4,7 @@ const Post = require("../models/Post");
 const Comment = require("../models/Comment");
 
 // followeing
-router.post("/following", async (req, res) => {
+router.put("/following", async (req, res) => {
   try {
     await User.findById(req.body.profileOwnerId, async (err, firstResp) => {
       err && res.status(500).send(err);
@@ -44,7 +44,7 @@ router.post("/following", async (req, res) => {
 });
 // unfollowing
 
-router.post("/unfollowing", async (req, res) => {
+router.put("/unfollowing", async (req, res) => {
   try {
     await User.findById(req.body.profileOwnerId, async (err, firstResp) =>
       err
@@ -54,13 +54,34 @@ router.post("/unfollowing", async (req, res) => {
             {
               $set: {
                 followers: firstResp.followers.filter(
-                  (userId) => userId != userTargetId
+                  (userId) => userId != req.body.userTargetId
                 ),
               },
             },
             { new: true },
-            (err, lastResp) =>
-              err ? res.status(500).send(err) : res.status(200).send(lastResp)
+            async (err, secondResp) =>
+              err
+                ? res.status(500).send(err)
+                : await User.findById(
+                    req.body.userTargetId,
+                    async (err, thirdResp) =>
+                      err
+                        ? res.status(500).send(err)
+                        : await User.findByIdAndUpdate(
+                            req.body.userTargetId,
+                            {
+                              $set: {
+                                followings: thirdResp.followings.filter(
+                                  (userId) => userId != req.body.profileOwnerId
+                                ),
+                              },
+                            },
+                            (err, lastResp) =>
+                              err
+                                ? res.status(500).send(err)
+                                : res.status(200).send(secondResp)
+                          )
+                  )
           )
     )
       .clone()
@@ -70,7 +91,7 @@ router.post("/unfollowing", async (req, res) => {
   }
 });
 // blocking
-router.post("/blocking", async (req, res) => {
+router.put("/blocking", async (req, res) => {
   try {
     await User.findById(req.body.profileOwnerId, async (err, firstResp) =>
       err
@@ -89,11 +110,11 @@ router.post("/blocking", async (req, res) => {
                   (userId) => userId != req.body.userTargetId
                 ),
               },
-              $addToSet: { blockedUsers: userTargetId },
+              $addToSet: { blockedUsers: req.body.userTargetId },
             },
             { new: true },
             async (err, secondResp) =>
-              findById(req.body.userTargetId, async (err, thirdResp) =>
+              User.findById(req.body.userTargetId, async (err, thirdResp) =>
                 err
                   ? res.status(500).send(err)
                   : await User.findByIdAndUpdate(
@@ -117,6 +138,8 @@ router.post("/blocking", async (req, res) => {
                           : res.status(200).send(secondResp)
                     )
               )
+                .clone()
+                .catch((err) => res.status(500).send(err))
           )
     )
       .clone()
@@ -126,7 +149,7 @@ router.post("/blocking", async (req, res) => {
   }
 });
 // unblocking
-router.post("/unblocking", async (req, res) => {
+router.put("/unblocking", async (req, res) => {
   try {
     await User.findById(req.body.profileOwnerId, async (err, firstResp) =>
       err
@@ -136,7 +159,7 @@ router.post("/unblocking", async (req, res) => {
             {
               $set: {
                 blockedUsers: firstResp.blockedUsers.filter(
-                  (userId) => userId != userTargetId
+                  (userId) => userId != req.body.userTargetId
                 ),
               },
             },
@@ -144,14 +167,16 @@ router.post("/unblocking", async (req, res) => {
             (err, lastResp) =>
               err ? res.status(500).send(err) : res.status(200).send(lastResp)
           )
-    );
+    )
+      .clone()
+      .catch((err) => res.status(500).send(err));
   } catch (err) {
     res.status(500).send(err);
   }
 });
 // accepting request
 // denying request
-router.post("/handleRequest", async (req, res) => {
+router.put("/handleRequest", async (req, res) => {
   try {
     await User.findById(req.body.profileOwnerId, async (err, firstResp) =>
       err
@@ -166,7 +191,7 @@ router.post("/handleRequest", async (req, res) => {
               },
             },
             { new: true },
-            (err, secondResp) => {
+            async (err, secondResp) => {
               err && res.status(500).send(err);
               !req.body.isAccepted
                 ? res.status(200).send({
