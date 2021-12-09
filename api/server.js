@@ -12,6 +12,8 @@ const likeDislikeSaveRoute = require("./routes/likeDislikeSave.js");
 const followerAndFollowingRoute = require("./routes/followerAndFollowing.js");
 const messagesRoute = require("./routes/messages.js");
 const contactRoute = require("./routes/contact.js");
+const multer = require("multer");
+const upload = multer({ dest: "images/" });
 
 const corsOptions = {
   origin: "*",
@@ -38,6 +40,10 @@ let db = mongoose.connect("mongodb://localhost/blog");
 //   })
 //   .then(console.log("conneted"))
 //   .catch((err) => console.log(err));
+
+app.post("/api/upload", upload.single("file.jpg"), (req, res) =>
+  res.status(200).json("files have been uploaded")
+);
 
 app.use("/api/auth", authRoute);
 app.use("/api/users", usersRoute);
