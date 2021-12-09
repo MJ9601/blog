@@ -13,7 +13,7 @@ const followerAndFollowingRoute = require("./routes/followerAndFollowing.js");
 const messagesRoute = require("./routes/messages.js");
 const contactRoute = require("./routes/contact.js");
 const multer = require("multer");
-const upload = multer({ dest: "images/" });
+const { compute_beta } = require("googleapis");
 
 const corsOptions = {
   origin: "*",
@@ -41,8 +41,18 @@ let db = mongoose.connect("mongodb://localhost/blog");
 //   .then(console.log("conneted"))
 //   .catch((err) => console.log(err));
 
-app.post("/api/upload", upload.single("file.jpg"), (req, res) =>
-  res.status(200).json("files have been uploaded")
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "images");
+  },
+  filename: (req, file, cb) => {
+    cb(null, "img.jpg");
+  },
+});
+
+const upload = multer({ storage: storage });
+app.post("/api/upload", upload.array("file", 3), (req, res) =>
+  res.status(500).send("files have been uploaded")
 );
 
 app.use("/api/auth", authRoute);
