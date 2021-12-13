@@ -1,0 +1,35 @@
+.message-0 {
+  border-radius: 15px;
+  position: relative;
+  padding-top: 10px;
+}
+.settingBars {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+}
+.options {
+  background-color: #eee;
+  position: absolute;
+  right: -70px;
+  top: 0;
+  border-radius: 5px;
+}
+.icons {
+  cursor: pointer;
+}
+.icons:hover {
+  color: red;
+}
+
+.options h5 {
+  font-size: 15px;
+  padding: 3px 10px;
+  font-weight: 500;
+  font-family: "Popins";
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+.options h5:hover {
+  color: red;
+}

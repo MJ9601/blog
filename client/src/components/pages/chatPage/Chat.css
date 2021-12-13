@@ -1,0 +1,45 @@
+.wrapper {
+  height: calc(100vh - 65px);
+  padding-top: 10px;
+  position: relative;
+  overflow-y: hidden;
+}
+.writting-wrapper {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  padding: 10px 30px;
+  background-color: #999;
+  display: flex;
+  justify-content: center;
+}
+.writting-wrapper input {
+  width: 80%;
+  padding: 5px 20px;
+  border-radius: 20px;
+  border: none;
+}
+.sendIcon {
+  margin-left: 10px;
+  transform: translateY(5px) rotate(43deg);
+  color: aliceblue;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  height: 25px;
+  width: 25px;
+}
+.sendIcon:hover {
+  color: rgb(0, 183, 255);
+}
+.msg-wrapper-owner {
+  position: absolute;
+  height: inherit;
+  bottom: 50px;
+  right: 0;
+  overflow-y: auto !important;
+  overflow-x: hidden;
+  display: table-cell;
+  vertical-align: bottom;
+  justify-content: end;
+}

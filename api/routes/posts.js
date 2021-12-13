@@ -50,6 +50,7 @@ router.post("/createPost", async (req, res) => {
       desc: req.body.desc,
       photo: req.body.photo,
       username: req.body.username,
+      location: req.body.location,
     });
 
     // const unUsedCategories = [];
@@ -141,6 +142,7 @@ router.put("/:postId", async (req, res) => {
       title: req.body.title,
       desc: req.body.desc,
       photo: req.body.photo,
+      location: req.body.location,
     };
 
     await Category.find({}, async (err, firstResp) => {

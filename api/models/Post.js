@@ -17,6 +17,10 @@ const PostSchema = Schema(
       type: String,
       required: false,
     },
+    location: {
+      type: String,
+      required: false,
+    },
     username: { type: Schema.Types.ObjectId, ref: "User", require: true },
     likes: [{ type: Schema.Types.ObjectId, ref: "User" }],
     dislikes: [{ type: Schema.Types.ObjectId, ref: "User" }],
