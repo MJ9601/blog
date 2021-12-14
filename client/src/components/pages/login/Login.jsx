@@ -1,7 +1,16 @@
 import "./Login.css";
 import { Link } from "react-router-dom";
+import { useContext, useState } from "react";
+import { UserContext } from "../../../context/UserState";
 
 export default function Login() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const { user, LoginProcess } = useContext(UserContext);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await LoginProcess(username, password);
+  };
   return (
     <>
       <div className="login">
@@ -10,18 +19,28 @@ export default function Login() {
         </div>
         <div className="login-wrapper">
           <h1 className="login-banner">Login</h1>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div>
               <label htmlFor="userName" className="labelTag">
                 Username:
               </label>
-              <input type="text" id="userName" className="inputTag" />
+              <input
+                type="text"
+                id="userName"
+                className="inputTag"
+                onChange={(e) => setUsername(e.target.value)}
+              />
             </div>
             <div>
               <label htmlFor="passWord" className="labelTag">
                 Password:
               </label>
-              <input type="password" id="passWord" className="inputTag" />
+              <input
+                type="password"
+                id="passWord"
+                className="inputTag"
+                onChange={(e) => setPassword(e.target.value)}
+              />
             </div>
             <div>
               <input type="submit" value="Sign in" className="signIn-btn" />
